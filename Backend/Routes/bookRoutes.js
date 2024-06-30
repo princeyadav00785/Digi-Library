@@ -6,7 +6,7 @@ const {
   updateBook,
   deleteBook,
 } = require('../Controllers/bookControllers');
-const { createBookRequest, respondToBookRequest,returnBookRequest } = require('../Controllers/bookRequestControllers');
+const { createBookRequest, respondToBookRequest ,getAllRequests } = require('../Controllers/bookRequestControllers');
 const { protect, librarian ,authorize } = require('../Middlewares/authMiddleware');
 
 
@@ -30,7 +30,8 @@ router.post('/request', protect, createBookRequest);
 router.patch('/request/:id', protect, authorize('librarian'), respondToBookRequest);
 
 // Librarian handles the return of a book
-router.patch('/return/:id', protect, authorize('librarian'), returnBookRequest);
+router.patch('/return/:id', protect, authorize('librarian'), respondToBookRequest);
 
+router.get('/requests',protect,authorize('libraian'),getAllRequests);
 
 module.exports = router;

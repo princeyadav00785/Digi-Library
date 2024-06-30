@@ -31,78 +31,79 @@ exports.createBookRequest = async (req, res) => {
 };
 
 // Librarian approves/rejects a book request
-exports.respondToBookRequest = async (req, res) => {
-  const requestId = req.params.id;
+// Respond to a request (PATCH /api/admin/requests/:requestId)
+exports.respondToRequest = async (req, res) => {
   const { status } = req.body;
 
   try {
-    const bookRequest = await BookRequest.findById(requestId).populate('user book');
-    if (!bookRequest) {
+    const request = await BookRequest.findById(req.params.requestId);
+    if (!request) {
       return res.status(404).json({ message: 'Request not found' });
     }
-//  cheching in db if bookreq already have been approved or not.
-    if (bookRequest.status !== 'pending') {
-      return res.status(400).json({ message: 'Request has already been processed' });
-    }
-// checking the user req , whether its approval req can be approved or not.
-    if (status === 'approved') {
-      const book = bookRequest.book;
-      if (book.quantity <= 0) {
-        return res.status(400).json({ message: 'Book is not available for borrowing' });
+
+    // Check if the request type is 'borrow' or 'return'
+    if (request.requestType === 'borrow') {
+      // Handle borrowing request
+      if (status === 'approved') {
+        // Update book quantity and availability
+        const book = await Book.findById(request.book);
+        if (!book) {
+          return res.status(404).json({ message: 'Book not found' });
+        }
+        if (book.quantity <= 0) {
+          return res.status(400).json({ message: 'Book out of stock' });
+        }
+        book.quantity--;
+        book.availability = book.quantity > 0 ? 'available' : 'outOfStock';
+        await book.save();
+
+        // Update user's borrowed books
+        const user = await User.findById(request.user);
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        user.booksBorrowingCurrently.push(request.book);
+        await user.save();
       }
+    } else if (request.requestType === 'return') {
+      // Handle return request
+      if (status === 'approved') {
+        // Update book quantity and availability
+        const book = await Book.findById(request.book);
+        if (!book) {
+          return res.status(404).json({ message: 'Book not found' });
+        }
+        book.quantity++;
+        book.availability = 'available';
+        await book.save();
 
-      book.quantity -= 1;
-      book.availability = book.quantity > 0 ? 'available' : 'outOfStock';
-      await book.save();
-
-      const user = bookRequest.user;
-      user.booksBorrowingCurrently.push(book._id);
-      await user.save();
+        // Remove book from user's currently borrowing list
+        const user = await User.findById(request.user);
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        const index = user.booksBorrowingCurrently.indexOf(request.book);
+        if (index !== -1) {
+          user.booksBorrowingCurrently.splice(index, 1);
+          await user.save();
+        }
+      }
     }
 
-    bookRequest.status = status;
-    bookRequest.responseDate = Date.now();
-    await bookRequest.save();
+    request.status = status;
+    await request.save();
 
-    res.json(bookRequest);
+    res.json(request);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-exports.returnBookRequest = async (req, res) => {
-  const requestId = req.params.id;
-  const { status } = req.body; // status should be 'returned'
-
+// Get all requests (GET /api/admin/requests) and librarian too.
+exports.getAllRequests = async (req, res) => {
   try {
-    const bookRequest = await BookRequest.findById(requestId).populate('user book');
-    if (!bookRequest) {
-      return res.status(404).json({ message: 'Request not found' });
-    }
-
-    if (bookRequest.status !== 'approved') {
-      return res.status(400).json({ message: 'Book has not been borrowed or already returned' });
-    }
-
-    if (status === 'returned') {
-      const book = bookRequest.book;
-      book.quantity += 1;
-      book.availability = book.quantity > 0 ? 'available' : 'outOfStock';
-      await book.save();
-
-      const user = bookRequest.user;
-      user.booksBorrowingCurrently = user.booksBorrowingCurrently.filter(
-        (bookId) => bookId.toString() !== book._id.toString()
-      );
-      user.booksBorrowed.push(book._id);
-      await user.save();
-    }
-
-    bookRequest.status = status;
-    bookRequest.responseDate = Date.now();
-    await bookRequest.save();
-
-    res.json(bookRequest);
+    const requests = await BookRequest.find().populate('user book');
+    res.json(requests);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

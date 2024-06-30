@@ -17,6 +17,11 @@ const BookRequestSchema = new mongoose.Schema(
       enum: ['pending', 'approved', 'rejected', 'returned'],
       default: 'pending',
     },
+    requestType: {
+      type: String,
+      enum: ['borrow', 'return'],
+      required: true,
+    },
     requestDate: {
       type: Date,
       default: Date.now,
