@@ -6,10 +6,13 @@ const {
   updateBook,
   deleteBook,
 } = require('../Controllers/bookControllers');
-const { protect, librarian } = require('../Middlewares/authMiddleware');
+const { createBookRequest, respondToBookRequest,returnBookRequest } = require('../Controllers/bookRequestControllers');
+const { protect, librarian ,authorize } = require('../Middlewares/authMiddleware');
+
 
 const router = express.Router();
 
+// Crud operations  on books by librarian and fetching books data by students.
 router.route('/')
   .post(protect, librarian, addBook)
   .get(protect, getBooks);
@@ -18,5 +21,16 @@ router.route('/:id')
   .get(protect, getBook)
   .put(protect, librarian, updateBook)
   .delete(protect, librarian, deleteBook);
+
+
+  // Student creates a book request
+router.post('/request', protect, createBookRequest);
+
+// Librarian responds to a book request
+router.patch('/request/:id', protect, authorize('librarian'), respondToBookRequest);
+
+// Librarian handles the return of a book
+router.patch('/return/:id', protect, authorize('librarian'), returnBookRequest);
+
 
 module.exports = router;

@@ -43,6 +43,8 @@ const BookSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  // would add pastHistory of Books too.
+  // would add History of all booking too.
 });
 
 const Book = mongoose.model('Book', BookSchema);

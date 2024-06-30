@@ -1,5 +1,5 @@
 const Book = require('../Model/bookModel');
-
+const User = require('../Model/userModel');
 exports.addBook = async (req, res) => {
   const { title, author, isbn, category, description, yearOfPublication, quantity } = req.body;
 
@@ -100,3 +100,5 @@ exports.deleteBook = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+

@@ -35,6 +35,18 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    booksBorrowed: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book',
+      }
+    ],
+    booksBorrowingCurrently: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book',
+      }
+    ]
   },
   { timestamps: true }
 );
