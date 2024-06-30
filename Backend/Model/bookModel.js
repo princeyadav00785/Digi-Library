@@ -45,6 +45,21 @@ const BookSchema = new mongoose.Schema({
   },
   // would add pastHistory of Books too.
   // would add History of all booking too.
+  usersHistory: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+      borrowedAt: {
+        type: Date,
+        default: Date.now,
+      },
+      returnedAt: {
+        type: Date,
+      },
+    },
+  ],
 });
 
 const Book = mongoose.model('Book', BookSchema);

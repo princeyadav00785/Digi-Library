@@ -53,17 +53,23 @@ exports.respondToRequest = async (req, res) => {
         if (book.quantity <= 0) {
           return res.status(400).json({ message: 'Book out of stock' });
         }
+        
+        // Update book availability and quantity
         book.quantity--;
         book.availability = book.quantity > 0 ? 'available' : 'outOfStock';
         await book.save();
 
-        // Update user's borrowed books
+        // Update user's currently borrowing list
         const user = await User.findById(request.user);
         if (!user) {
           return res.status(404).json({ message: 'User not found' });
         }
         user.booksBorrowingCurrently.push(request.book);
         await user.save();
+
+        // Update book's history
+        book.usersHistory.push({ user: request.user, borrowedAt: new Date() });
+        await book.save();
       }
     } else if (request.requestType === 'return') {
       // Handle return request
@@ -73,6 +79,8 @@ exports.respondToRequest = async (req, res) => {
         if (!book) {
           return res.status(404).json({ message: 'Book not found' });
         }
+
+        // Update book availability and quantity
         book.quantity++;
         book.availability = 'available';
         await book.save();
@@ -87,9 +95,17 @@ exports.respondToRequest = async (req, res) => {
           user.booksBorrowingCurrently.splice(index, 1);
           await user.save();
         }
+
+        // Update book's history for return
+        const historyItem = book.usersHistory.find(item => item.user.toString() === request.user && !item.returnedAt);
+        if (historyItem) {
+          historyItem.returnedAt = new Date();
+          await book.save();
+        }
       }
     }
 
+    // Update request status
     request.status = status;
     await request.save();
 
