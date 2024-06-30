@@ -23,13 +23,12 @@ const UserSchema = new mongoose.Schema(
     avatar: {
       type: String,
     },
-    refreshToken: {
+    // for user pwd change
+    resetPasswordToken: {
       type: String,
-      default: undefined,
     },
-    refreshTokenExpiry: {
-      type: String,
-      default: undefined,
+    resetPasswordExpires: {
+      type: Date,
     },
     fine: {
       type: Number,
@@ -46,7 +45,7 @@ const UserSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book',
       }
-    ]
+    ],
   },
   { timestamps: true }
 );
