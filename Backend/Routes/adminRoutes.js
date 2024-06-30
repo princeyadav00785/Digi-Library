@@ -2,13 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { protect, authorize } = require('../Middlewares/authMiddleware');
 const UserController = require('../Controllers/userController');
-const {
-    addBook,
-    getBooks,
-    getBook,
-    updateBook,
-    deleteBook,
-  } = require('../Controllers/bookControllers');
+const bookControllers = require('../Controllers/bookControllers');
+const RequestController=require('../Controllers/bookRequestControllers')
 
 
 // Admin-only routes FOR User Management
@@ -18,11 +13,11 @@ router.patch('/users/:userId', protect, authorize('admin'), UserController.updat
 router.delete('/users/:userId', protect, authorize('admin'), UserController.deleteUser);
 
 // Admin-only routes For Books Management
-router.get('/books', protect, authorize('admin'), getBooks);
-router.post('/books', protect, authorize('admin'), addBook);
-router.get('/books/:bookId', protect, authorize('admin'), getBook);
-router.patch('/books/:bookId', protect, authorize('admin'), updateBook);
-router.delete('/books/:bookId', protect, authorize('admin'), deleteBook);
+router.get('/books', protect, authorize('admin'), bookControllers.getBooks);
+router.post('/books', protect, authorize('admin'), bookControllers.addBook);
+router.get('/books/:bookId', protect, authorize('admin'), bookControllers.getBook);
+router.patch('/books/:bookId', protect, authorize('admin'), bookControllers.updateBook);
+router.delete('/books/:bookId', protect, authorize('admin'), bookControllers.deleteBook);
 
 // Admin-only routes FOR Request Management 
 router.get('/requests', protect, authorize('admin', 'librarian'), RequestController.getAllRequests);
