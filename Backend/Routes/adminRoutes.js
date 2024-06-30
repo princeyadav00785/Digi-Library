@@ -4,6 +4,7 @@ const { protect, authorize } = require('../Middlewares/authMiddleware');
 const UserController = require('../Controllers/userController');
 const bookControllers = require('../Controllers/bookControllers');
 const RequestController=require('../Controllers/bookRequestControllers')
+const DashboardController = require('../Controllers/dashboard.controllers');
 
 
 // Admin-only routes FOR User Management
@@ -23,6 +24,8 @@ router.delete('/books/:bookId', protect, authorize('admin'), bookControllers.del
 router.get('/requests', protect, authorize('admin', 'librarian'), RequestController.getAllRequests);
 router.patch('/requests/:requestId', protect, authorize('admin', 'librarian'), RequestController.respondToRequest);
 
-// 
+// DashBoard Routes...
+router.get('/dashboard/stats', protect, authorize('admin', 'librarian'), DashboardController.getDashboardStats);
+
 
 module.exports = router;
