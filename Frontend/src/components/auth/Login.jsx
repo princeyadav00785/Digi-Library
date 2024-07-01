@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ArrowRight } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userslice';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -14,7 +17,9 @@ export function SignIn() {
         email,
         password,
       });
+      const { user, token } = res.data;
       localStorage.setItem('token', res.data.token);
+      dispatch(setUser({ user,token}));
       setMessage('Login successful');
       // Redirect to dashboard or another page
     } catch (error) {

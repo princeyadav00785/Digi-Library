@@ -46,12 +46,15 @@ exports.loginUser= async(req, res)=>{
             user:{
                 id:user.id,
                 role:user.role,
+                username:user.username,
+                email:user.email,
             }
         }
         console.log(user);
+        user.password=undefined;
         jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 30000 }, (err, token) => {
             if (err) throw err;
-            res.json({ token });
+            res.json({ 'user':user ,"token":token});
           });
              
 
