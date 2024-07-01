@@ -20,7 +20,8 @@ exports.registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
     await user.save();
-    res.status(201).json(user);
+    delete user.password;
+    res.status(201).json({"user":user,"message":"Registered Sucessfully!!!"});
   } catch (err) {
     console.log("Error while registering user", err);
   }

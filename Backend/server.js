@@ -9,10 +9,11 @@ const userRoutes =require('./Routes/userRoutes');
 const bookRoutes =require('./Routes/bookRoutes');
 const adminRoutes=require('./Routes/adminRoutes');
 const feedbackRoutes=require('./Routes/feedbackRoutes')
+const cors = require('cors');
 
 connectDB();
 
-
+app.use(cors());
 app.use(express.json());
 
 // Routes
@@ -21,6 +22,7 @@ app.use('/api/books',bookRoutes);
 app.use('/api/book-requests', bookRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/feedback',feedbackRoutes);
+
 
 
 app.use((err, req, res, next) => {
