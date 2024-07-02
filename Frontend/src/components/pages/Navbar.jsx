@@ -1,8 +1,10 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
+import { useSelector } from 'react-redux'
+
 
 const menuItems = [
   {
@@ -17,17 +19,44 @@ const menuItems = [
     name: 'Contact',
     href: '#',
   },
+  {
+    name:'Admin-Dashboard',
+    href:'/admin'
+  }
 ]
 
-export default function Header() {
+export default function Navbar() {
+  const user =useSelector((state)=>state.user.user);
+  const role=user.role;
+  // console.log(user);
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
+  
+  const [navbarBg, setNavbarBg] = useState('bg-transparent');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setNavbarBg('bg-white'); 
+      } else {
+        setNavbarBg('bg-transparent'); 
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   return (
-    <div className="relative w-full bg-white">
+    <div className={` fixed top-0 left-0 w-full ${navbarBg} transition-colors duration-500`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <Link to="/" className="inline-flex items-center space-x-2" >
           <span>
@@ -75,7 +104,7 @@ export default function Header() {
             <img
               className="h-10 w-10 rounded-full"
               src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-              alt="Dan_Abromov"
+              alt={user.username}
             />
             <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
           </span>
@@ -119,6 +148,7 @@ export default function Header() {
                 <div className="mt-6">
                   <nav className="grid gap-y-4">
                     {menuItems.map((item) => (
+                      item.name==='Admin-Dashboard'&&role!=='admin'?null:(
                       <a
                         key={item.name}
                         href={item.href}
@@ -130,7 +160,7 @@ export default function Header() {
                         <span>
                           <ChevronRight className="ml-3 h-4 w-4" />
                         </span>
-                      </a>
+                      </a>)
                     ))}
                   </nav>
                 </div>
@@ -138,11 +168,11 @@ export default function Header() {
                   <img
                     className="inline-block h-10 w-10 rounded-full"
                     src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                    alt="Dan_Abromov"
+                    alt={user.username}
                   />
                   <span className="flex flex-col">
-                    <span className="text-sm font-medium text-gray-900">Dan Abromov</span>
-                    <span className="text-sm font-medium text-gray-500">@dan_abromov</span>
+                    <span className="text-sm font-medium text-gray-900">{user.username}</span>
+                    <span className="text-sm font-medium text-gray-500">{user.email}</span>
                   </span>
                 </div>
               </div>

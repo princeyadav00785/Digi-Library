@@ -30,6 +30,7 @@ exports.addBook = async (req, res) => {
 exports.getBooks = async (req, res) => {
   try {
     const books = await Book.find();
+    // console.log("i am here.")
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });

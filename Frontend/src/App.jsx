@@ -1,15 +1,18 @@
 import './App.css'
-import Dashboard from './components/Dasboard';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import NotFound from './components/NotFound';
+import AdminDashboard from './components/dashboard/AdminDasboard';
+import Footer from './components/pages/Footer';
+import Header from './components/pages/Header';
+import NotFound from './components/pages/NotFound';
 import SignIn from './components/auth/Login'
 import Register from './components/auth/Register'
+import Dashboard from './components/components/Hero';
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser,clearUser } from './redux/userslice';
 import {jwtDecode} from 'jwt-decode';
+import Hero from './components/components/Hero';
+import Navbar from './components/pages/Navbar';
 
 
 function App() {
@@ -30,7 +33,7 @@ function App() {
     }
   }, [dispatch]);
   
-  console.log(user);
+  // console.log(user);
   return (
     <div className="flex flex-col min-h-screen">
       <BrowserRouter>
@@ -43,7 +46,10 @@ function App() {
             </>
           ) : (
             <>
-              <Route path="/" element={<><Header /><Dashboard /><Footer /></>} />
+             <Route path="/" element={<><Header /><Footer /></>} />
+              {user.role === 'admin' && (
+                <Route path="/admin" element={<><Navbar /><AdminDashboard /><Footer /></>} />
+              )}
               <Route path="*" element={<><Header /><NotFound /><Footer /></>} />
             </>
           )}
