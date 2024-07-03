@@ -110,10 +110,10 @@ export default function Footer() {
               </div>
             </div>
           </div>
-          <div class="container mx-auto py-4">
-            <p class="copyright text-center">
+          <div className="container mx-auto py-4">
+            <p className="copyright text-center">
               &copy; 2024{" "}
-              <a href="#" class="text-blue-500">
+              <a href="#" className="text-blue-500">
                 Digi-Library
               </a>
               . All Rights Reserved

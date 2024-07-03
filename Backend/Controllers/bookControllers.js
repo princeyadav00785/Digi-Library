@@ -16,7 +16,7 @@ exports.addBook = async (req, res) => {
       availability: quantity > 0 ? 'available' : 'outOfStock',
     });
     const book =Book.find({isbn});
-    if(!book?.length){
+    if(book.length>0){
       return res.status(404).json({ message: 'Book Already Exists !!' });
     }
     const savedBook = await newBook.save();

@@ -9,6 +9,7 @@ const BooksList = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
+      const token = localStorage.getItem('token');
       try {
         const response = await axios.get('http://localhost:5000/api/books', {
             headers: {
@@ -17,6 +18,7 @@ const BooksList = () => {
           });
         setBooks(response.data);
         setLoading(false);
+        // console.log(response);
       } catch (error) {
         console.error('Error fetching books:', error);
         setLoading(false);
@@ -25,8 +27,9 @@ const BooksList = () => {
 
     fetchBooks();
   }, []);
+  
 
-  console.log(books);
+  // console.log(books);
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-semibold mb-4">All Books</h2>
@@ -34,9 +37,9 @@ const BooksList = () => {
         <Loader /> 
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* {books.map((book) => (
+          {books.map((book) => (
             <BookCard key={book._id} book={book} />
-          ))} */}
+          ))}
         </div>
       )}
     </div>

@@ -20,6 +20,7 @@ const BookRequestSchema = new mongoose.Schema(
     requestType: {
       type: String,
       enum: ['borrow', 'return'],
+      default:'borrow',
       required: true,
     },
     requestDate: {

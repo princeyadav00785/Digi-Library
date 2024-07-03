@@ -22,6 +22,10 @@ const menuItems = [
   {
     name:'Admin-Dashboard',
     href:'/admin'
+  },
+  {
+    name:"Librarian",
+    href:'/librarian'
   }
 ]
 
@@ -56,8 +60,8 @@ export default function Navbar() {
 
 
   return (
-    <div className={` fixed top-0 left-0 w-full ${navbarBg} transition-colors duration-500`}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+    <div className={`text-lg fixed top-0 left-0 w-full ${navbarBg} transition-colors duration-500`}>
+      <div className=" mx-auto flex max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link to="/" className="inline-flex items-center space-x-2" >
           <span>
             <svg
@@ -73,7 +77,7 @@ export default function Navbar() {
               />
             </svg>
           </span>
-          <span className="font-bold">Digi-Library</span>
+          <span className="font-bold hover:text-white">Digi-Library</span>
         </Link>
         <div className="hidden lg:block">
           <ul className="ml-12 inline-flex space-x-8">
@@ -81,11 +85,11 @@ export default function Navbar() {
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="inline-flex items-center text-sm font-semibold text-gray-800 hover:text-gray-900"
+                  className="inline-flex items-center text-lg font-semibold text-gray-800 hover:text-white"
                 >
                   {item.name}
                   <span>
-                    <ChevronDown className="ml-2 h-4 w-4" />
+                    {/* <ChevronDown className="ml-2 h-4 w-4" /> */}
                   </span>
                 </a>
               </li>
@@ -149,18 +153,21 @@ export default function Navbar() {
                   <nav className="grid gap-y-4">
                     {menuItems.map((item) => (
                       item.name==='Admin-Dashboard'&&role!=='admin'?null:(
-                      <a
+                        item.name==='Librarian'&&role==='student'?null:(
+                          <a
                         key={item.name}
                         href={item.href}
-                        className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50"
+                        className="-m-3 flex items-center rounded-md p-3 text-lg font-semibold hover:bg-teal-500"
                       >
                         <span className="ml-3 text-base font-medium text-gray-900">
                           {item.name}
                         </span>
                         <span>
-                          <ChevronRight className="ml-3 h-4 w-4" />
+                          {/* <ChevronRight className="ml-3 h-4 w-4" /> */}
                         </span>
-                      </a>)
+                      </a>
+                        )
+                      )
                     ))}
                   </nav>
                 </div>

@@ -1,20 +1,38 @@
-import React from 'react';
+import React from 'react'
+import { ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom';
 
-const BookCard = ({ book }) => {
+export default function BookCard({ book }) {
   return (
-    <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
+    <Link to={`/api/books/${book._id}`} className="w-[300px] rounded-md border">
       <img
-        src={book.coverImageUrl} 
-        alt={book.title}
-        className="w-full h-64 object-cover object-center"
+        src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+        alt="Laptop"
+        className="h-[200px] w-full rounded-t-md object-cover"
       />
       <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
-        <p className="text-sm mb-2">{book.author}</p>
-        <p className="text-sm">{book.category}</p>
+        <h1 className="inline-flex items-center text-lg font-semibold">
+         {book.title} &nbsp; <ArrowUpRight className="h-4 w-4" />
+        </h1>
+        <p className="mt-3 text-sm text-gray-600">
+         {book.description}
+         <br/>
+         <div className=' font-semibold text-gray-900 mt-3'>
+         YOE : {book.yearOfPublication} 
+         </div>
+        </p>
+        <div className="mt-4">
+          <span className="mb-2 mr-2 inline-block rounded-full bg-gray-100 px-3 py-1 text-[10px] font-semibold text-gray-900">
+            #{book.category}
+          </span>
+        </div>
+        <button
+          type="button"
+          className="mt-4 w-full rounded-sm bg-black px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+        >
+          Read
+        </button>
       </div>
-    </div>
+    </Link>
   );
-};
-
-export default BookCard;
+}

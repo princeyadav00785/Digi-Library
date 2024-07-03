@@ -17,6 +17,12 @@ exports.createBookRequest = async (req, res) => {
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
+    const existingRequest = await BookRequest.find({ user: userId, book: bookId });
+    console.log(existingRequest);
+    if (existingRequest.length > 0) {
+      return res.status(400).json({ message: 'Borrow request already sent to respective authority!!' });
+    }
+
 
     const bookRequest = new BookRequest({
       user: userId,
@@ -29,6 +35,7 @@ exports.createBookRequest = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Librarian approves/rejects a book request
 // Respond to a request (PATCH /api/admin/requests/:requestId)

@@ -13,6 +13,10 @@ import { setUser,clearUser } from './redux/userslice';
 import {jwtDecode} from 'jwt-decode';
 import Hero from './components/components/Hero';
 import Navbar from './components/pages/Navbar';
+import Homepage from './components/pages/Homepage';
+import Bookinfo from './components/pages/BookInfo';
+import LibrarianDashboard from './components/dashboard/LibrarianDashBoard';
+
 
 
 function App() {
@@ -46,7 +50,9 @@ function App() {
             </>
           ) : (
             <>
-             <Route path="/" element={<><Header /><Footer /></>} />
+             <Route path="/" element={<><Header/><Homepage/><Footer /></>} />
+             <Route path="api/books/:id" element={<><Navbar/><Bookinfo /><Footer /></>} />
+             <Route path="librarian" element={<><Navbar/><LibrarianDashboard/><Footer /></>} />
               {user.role === 'admin' && (
                 <Route path="/admin" element={<><Navbar /><AdminDashboard /><Footer /></>} />
               )}
