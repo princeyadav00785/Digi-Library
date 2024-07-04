@@ -22,6 +22,20 @@ const protect = async (req, res, next) => {
   }
 };
 
+const selfAuth= async (req,res,next)=>{
+  const {id}= req.params.id;
+  const ID = req.user.id;
+  try {
+    if(id===ID){
+      next()
+    }
+  } catch (error) {
+    res.status(401).json({ message: 'Not authorized, token failed' });
+  }
+}
+
+
+
 const admin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
     next();
@@ -31,7 +45,7 @@ const admin = (req, res, next) => {
 };
 
 const librarian = (req, res, next) => {
-  console.log(req.user);
+  // console.log(req.user);
   if (req.user && (req.user.role === 'admin' || req.user.role === 'librarian')) {
     next();
   } else {
@@ -53,4 +67,5 @@ const authorize = (...roles) => {
 };
 
 
-module.exports = { protect, admin, librarian ,authorize };
+
+module.exports = { protect, admin, librarian ,authorize ,selfAuth};

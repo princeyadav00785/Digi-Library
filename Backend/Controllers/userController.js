@@ -48,6 +48,10 @@ exports.loginUser= async(req, res)=>{
                 role:user.role,
                 username:user.username,
                 email:user.email,
+                avatar:user?.avatar,
+                fine:user?.fine,
+                booksBorrowed:user.booksBorrowed,
+                booksBorrowingCurrently:user.booksBorrowingCurrently,
             }
         }
         console.log(user);
@@ -127,6 +131,43 @@ exports.deleteUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
     res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+exports.getUserHistory = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId)
+
+  try {
+    // Fetch user with books they borrowed
+    const user = await User.findById(userId)
+      .populate('booksBorrowed', 'title author borrowedDate returnDate')
+      .populate('booksBorrowingCurrently', 'title author borrowedDate' );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Prepare response data
+    const userHistory = {
+      username: user.username,
+      booksBorrowed: user.booksBorrowed.map(book => ({
+        title: book.title,
+        author: book.author,
+        borrowedDate: book.borrowedDate,
+        returnDate: book.returnDate || 'Not returned yet',
+      })),
+      booksBorrowingCurrently: user.booksBorrowingCurrently.map(book => ({
+        title: book.title,
+        author: book.author,
+        borrowedDate: book.borrowedDate,
+      })),
+    };
+
+    res.json(userHistory);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

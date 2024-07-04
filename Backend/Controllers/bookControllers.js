@@ -102,4 +102,17 @@ exports.deleteBook = async (req, res) => {
   }
 };
 
+exports.getBookHistory = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.bookId).populate('usersHistory.user', 'username email');
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    res.json(book.borrowHistory);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 

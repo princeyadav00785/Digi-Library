@@ -23,6 +23,11 @@ import FeedbackForm from './components/pages/Feedback';
 import AddBooks from './components/Librarian/AddBooks';
 import AboutUs from './components/pages/AboutUs';
 import RequestList from './components/Librarian/RequestList';
+import BookHisList from './components/pages/BookHisList';
+import BookHistory from './components/pages/BookHistory';
+import UsersHisList from './components/pages/UserHisList';
+import UserHistory from './components/pages/UserHistory';
+import UserProfile from './components/pages/Profile';
 
 
 
@@ -54,28 +59,39 @@ function App() {
         <Routes>
           {!user ? (
             <>
+               {/* User Login */}
               <Route path="/login" element={<SignIn />} />
               <Route path="/signup" element={<Register />} />
               <Route path="*" element={<SignIn/>} />
+
             </>
           ) : (
             <>
+
              <Route path="/" element={<><Header/><Homepage/><Footer /></>} />
              <Route path="api/books/:id" element={<><Navbar/><Bookinfo /><Footer /></>} />
              <Route path="/about-us" element={<><Navbar/><AboutUs/><Footer/></>}/>
+             <Route path="/feedback" element={<><Navbar/><FeedbackForm/><Footer /></>} />
+             <Route path ="/profile" element={<><Navbar/><UserProfile/><Footer/></>}/>
+
              {/* Librarian Aceesable routes only*/}
              <Route path="librarian" element={<LibrarianDashboard />}>
                <Route index element={<LibrarianHomepage/>} />
                <Route path="finance" element={<Finance />} />
                <Route path="add-books" element={<AddBooks />} />
                <Route path="requests" element={<RequestList/>}/>
+               <Route path ="book-history" element={<BookHisList/>}/>
+               <Route path ="books/history/:id" element={<BookHistory/>}/>
+               <Route path ="users-history" element={<UsersHisList/>}/>
+               <Route path ="users-history/:id" element={<UserHistory/>}/>
             </Route>
-             <Route path="/feedback" element={<><Navbar/><FeedbackForm/><Footer /></>} />
+
              {/* Admin Acessable routes only */}
               {user.role === 'admin' && (
                 <Route path="/admin" element={<><Navbar /><AdminDashboard /><Footer /></>} />
               )}
               <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />
+
             </>
           )}
         </Routes>

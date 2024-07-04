@@ -2,6 +2,7 @@ const express= require('express');
 const router= express.Router();
 const userController=require('../Controllers/userController');
 const authController= require('../Controllers/authController');
+const authMiddleware =require('../Middlewares/authMiddleware');
 
 
 router.post('/register',userController.registerUser);
@@ -12,5 +13,7 @@ router.post('/logout',userController.logoutUser);
 router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password', authController.resetPassword);
 
+//Profile
+router.get('/profile/:id',authMiddleware.protect,authMiddleware.selfAuth,userController.getUserById);
 
 module.exports= router;

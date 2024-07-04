@@ -5,8 +5,9 @@ const {
   getBook,
   updateBook,
   deleteBook,
+  getBookHistory
 } = require('../Controllers/bookControllers');
-const { protect, librarian } = require('../Middlewares/authMiddleware');
+const { protect, librarian,authorize } = require('../Middlewares/authMiddleware');
 
 
 const router = express.Router();
@@ -21,5 +22,8 @@ router.route('/:id')
   .get(protect, getBook)
   .put(protect, librarian, updateBook)
   .delete(protect, librarian, deleteBook);
+
+router.get('/history/:bookId', protect, authorize('admin', 'librarian'), getBookHistory);
+
 
 module.exports = router;

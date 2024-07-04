@@ -14,7 +14,7 @@ const RequestList = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRequests(response.data);
-        console.log(response);
+        // console.log(response);
       } catch (error) {
         console.error('Error fetching requests:', error);
       }

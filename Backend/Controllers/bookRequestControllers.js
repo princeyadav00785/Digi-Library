@@ -41,11 +41,11 @@ exports.createBookRequest = async (req, res) => {
 // Respond to a request (PATCH /api/admin/requests/:requestId)
 exports.respondToRequest = async (req, res) => {
   const { status } = req.body;
-  console.log("Requested.")
+  // console.log("Requested.")
   try {
     
     const requestInDb = await BookRequest.find({ _id:req.params.id});
-    console.log(requestInDb);
+    // console.log(requestInDb);
     if (!requestInDb) {
       return res.status(404).json({ message: 'Request not found' });
     }
@@ -141,4 +141,5 @@ exports.getAllRequests = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 

@@ -26,12 +26,12 @@ const AddBooks = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-        console.log(token);
+        // console.log(token);
       const response = await axios.post('http://localhost:5000/api/books',formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         }}); 
-      console.log(response.data);
+      // console.log(response.data);
       alert(`!${formData.title} Book sucessfully added...`)
       setFormData({
         title: '',
