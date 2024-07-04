@@ -15,7 +15,8 @@ import Hero from './components/components/Hero';
 import Navbar from './components/pages/Navbar';
 import Homepage from './components/pages/Homepage';
 import Bookinfo from './components/pages/BookInfo';
-import LibrarianDashboard from './components/dashboard/LibrarianDashBoard';
+import LibrarianDashboard from './components/Librarian/LibrarianDashBoard';
+import BooksList from './components/components/BookList';
 
 
 
@@ -29,6 +30,7 @@ function App() {
       try {
         const decoded = jwtDecode(token);
         dispatch(setUser({ user: decoded.user, token }));
+
       } catch (error) {
         console.error('Token is invalid:', error);
         localStorage.removeItem('token');
@@ -52,7 +54,11 @@ function App() {
             <>
              <Route path="/" element={<><Header/><Homepage/><Footer /></>} />
              <Route path="api/books/:id" element={<><Navbar/><Bookinfo /><Footer /></>} />
-             <Route path="librarian" element={<><Navbar/><LibrarianDashboard/><Footer /></>} />
+             {/* <Route path="librarian" element={<LibrarianDashboard/>} /> */}
+             <Route path="librarian" element={<LibrarianDashboard />}>
+               <Route index element={<BooksList />} />
+               
+            </Route>
               {user.role === 'admin' && (
                 <Route path="/admin" element={<><Navbar /><AdminDashboard /><Footer /></>} />
               )}

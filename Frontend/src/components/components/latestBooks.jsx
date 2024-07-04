@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import BookCard from './BookCard';
 import axios from'axios'
+import { useDispatch } from 'react-redux';
+import { clearUser } from '../../redux/userslice';
 
 function UpcomingBooks() {
   const [books,setBooks]=useState([]);
+  const dispatch=useDispatch();
    useEffect(()=>{
     const fetchBooks = async () => {
       const token = localStorage.getItem('token');
@@ -16,6 +19,8 @@ function UpcomingBooks() {
         setBooks(response.data);
         // console.log(response);
       } catch (error) {
+        localStorage.removeItem('token');
+        dispatch(clearUser());
         console.error('Error fetching books:', error);
       }
     };

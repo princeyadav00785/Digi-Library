@@ -1,38 +1,58 @@
-'use client'
-
 import React, { useEffect, useState } from 'react';
+import Sidebar from './SideBar';
+import Footer from '../pages/Footer';
 import { Link } from 'react-router-dom'
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import { Outlet } from 'react-router-dom';
 
 
-const menuItems = [
-  {
-    name: 'Home',
-    href: '/',
-  },
-  {
-    name: 'About',
-    href: '#',
-  },
-  {
-    name: 'Contact',
-    href: '#',
-  },
-  {
-    name:'Admin-Dashboard',
-    href:'/admin'
-  },
-  {
-    name:"Librarian",
-    href:'/librarian'
-  }
-]
+const LibrarianDashboard = () => {
+  const menuItems = [
+    {
+      name: 'Home',
+      href: '/',
+    },
+    {
+      name: 'Dashboard',
+      href: '/librarian/dashboard',
+    },
+    {
+      name: 'Finance',
+      href: '/librarian/finance',
+    },
+    {
+      name:'Admin-Dashboard',
+      href:'/admin'
+    },
+    {
+      name:"Add Books",
+      href:'/librarian/add-books'
+    },
+    {
+      name:"Requests",
+      href:'/librarian/requests'
+    },
+    {
+      name:"Book History",
+      href:'/librarian/book-history'
+    },
+    {
+      name:"Users History",
+      href:'/librarian/users-history'
+    },
+    {
+      name:"Edit Books",
+      href:'/librarian/edit-books'
+    },
+    {
+      name:"Profile Setting",
+      href:'/librarian/profile'
+    },
+  ]
 
-export default function Navbar() {
   const user =useSelector((state)=>state.user.user);
   const role=user.role;
-  // console.log(user);
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
@@ -60,7 +80,15 @@ export default function Navbar() {
 
 
   return (
-    <div className={`text-lg fixed top-0 left-0 w-full ${navbarBg} transition-colors duration-500`}>
+    <div className="flex flex-col md:flex-row h-[100vh]">
+      {/* Sidebar for medium and larger screens */}
+      <div className="hidden md:block md:w-1/5 h-16 md:h-screen bg-gray-800 sticky top-0">
+        <Sidebar />
+      </div>
+
+      {/* Top Navbar for small screens */}
+      <div className="block md:hidden w-full h-16 bg-gray-800 sticky top-0">
+           <div className={`text-lg fixed top-0 left-0 w-full ${navbarBg} transition-colors duration-500`}>
       <div className=" mx-auto flex max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link to="/" className="inline-flex items-center space-x-2" >
           <span>
@@ -188,5 +216,19 @@ export default function Navbar() {
         )}
       </div>
     </div>
-  )
-}
+
+      </div>
+
+      {/* Main content area */}
+      <div className="flex-1 bg-gray-500 overflow-auto min-h-[100vh] ">
+        <div className='p-8 pt-16 md:pt-8'>
+        <h1 className="text-6xl font-serif text-center text-white">Librarian Dashboard</h1>
+        <Outlet/>
+        </div>
+        <Footer />
+      </div>
+    </div>
+  );
+};
+
+export default LibrarianDashboard;
