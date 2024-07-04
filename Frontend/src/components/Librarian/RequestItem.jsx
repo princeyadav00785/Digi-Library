@@ -7,7 +7,7 @@ const RequestItem = ({ request }) => {
   const handleResponse = async (newStatus) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/book-requests/request/${request._id}/respond`, { status: newStatus }, {
+      await axios.patch(`http://localhost:5000/api/book-requests/request/respond/${request._id}`, { status: newStatus }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setStatus(newStatus);
