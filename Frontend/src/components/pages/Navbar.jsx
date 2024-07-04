@@ -13,11 +13,11 @@ const menuItems = [
   },
   {
     name: 'About',
-    href: '#',
+    href: '/about-us',
   },
   {
     name: 'Contact',
-    href: '#',
+    href: '/feedback',
   },
   {
     name:'Admin-Dashboard',
@@ -26,6 +26,14 @@ const menuItems = [
   {
     name:"Librarian",
     href:'/librarian'
+  },
+  {
+    name:'History',
+    href:'/user-history'
+  },
+  {
+    name:'Logout',
+    href:'/'
   }
 ]
 
@@ -57,7 +65,10 @@ export default function Navbar() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
+  const handleLogout = () => {
+    localStorage.removeItem('token'); 
+    window.location.href = '/login'; 
+  };
 
   return (
     <div className={`text-lg fixed top-0 left-0 w-full ${navbarBg} transition-colors duration-500`}>
@@ -81,19 +92,32 @@ export default function Navbar() {
         </Link>
         <div className="hidden lg:block">
           <ul className="ml-12 inline-flex space-x-8">
-            {menuItems.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  className="inline-flex items-center text-lg font-semibold text-gray-800 hover:text-white"
-                >
-                  {item.name}
-                  <span>
-                    {/* <ChevronDown className="ml-2 h-4 w-4" /> */}
-                  </span>
-                </a>
-              </li>
-            ))}
+          {menuItems.map((item) => {
+                      if (item.name === 'Admin-Dashboard' && role !== 'admin') {
+                        return null;
+                      }
+
+                      if (item.name === 'Librarian' && role === 'student') {
+                        return null;
+                      }
+                      if (item.name === 'Logout') {
+                        return null;
+                      }
+                      return (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="-m-3 flex items-center rounded-md p-3 text-lg font-semibold hover:bg-teal-500"
+                        >
+                          <span className="ml-3 text-base font-medium text-gray-900">
+                            {item.name}
+                          </span>
+                          <span>
+                            {/* <ChevronRight className="ml-3 h-4 w-4" /> */}
+                          </span>
+                        </a>
+                      );
+                    })}
           </ul>
         </div>
         <div className="flex grow justify-end">
@@ -151,24 +175,45 @@ export default function Navbar() {
                 </div>
                 <div className="mt-6">
                   <nav className="grid gap-y-4">
-                    {menuItems.map((item) => (
-                      item.name==='Admin-Dashboard'&&role!=='admin'?null:(
-                        item.name==='Librarian'&&role==='student'?null:(
-                          <a
-                        key={item.name}
-                        href={item.href}
-                        className="-m-3 flex items-center rounded-md p-3 text-lg font-semibold hover:bg-teal-500"
-                      >
-                        <span className="ml-3 text-base font-medium text-gray-900">
-                          {item.name}
-                        </span>
-                        <span>
-                          {/* <ChevronRight className="ml-3 h-4 w-4" /> */}
-                        </span>
-                      </a>
-                        )
-                      )
-                    ))}
+                  {menuItems.map((item) => {
+                      if (item.name === 'Admin-Dashboard' && role !== 'admin') {
+                        return null;
+                      }
+
+                      if (item.name === 'Librarian' && role === 'student') {
+                        return null;
+                      }
+                      if (item.name === 'Logout') {
+                        return (
+                          <button
+                            key={item.name}
+                            onClick={handleLogout}
+                            className="-m-3 flex items-center rounded-md p-3 text-lg font-semibold hover:bg-teal-500"
+                          >
+                            <span className="ml-3 text-base font-medium text-gray-900">
+                              {item.name}
+                            </span>
+                            <span>
+                              <ChevronRight className="ml-3 h-4 w-4" />
+                            </span>
+                          </button>
+                        );
+                      }
+                      return (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="-m-3 flex items-center rounded-md p-3 text-lg font-semibold hover:bg-teal-500"
+                        >
+                          <span className="ml-3 text-base font-medium text-gray-900">
+                            {item.name}
+                          </span>
+                          <span>
+                            {/* <ChevronRight className="ml-3 h-4 w-4" /> */}
+                          </span>
+                        </a>
+                      );
+                    })}
                   </nav>
                 </div>
                 <div className="ml-3 mt-4 flex items-center space-x-2">

@@ -17,6 +17,12 @@ import Homepage from './components/pages/Homepage';
 import Bookinfo from './components/pages/BookInfo';
 import LibrarianDashboard from './components/Librarian/LibrarianDashBoard';
 import BooksList from './components/components/BookList';
+import LibrarianHomepage from './components/Librarian/Homepage';
+import Finance from './components/Librarian/Finance';
+import FeedbackForm from './components/pages/Feedback';
+import AddBooks from './components/Librarian/AddBooks';
+import AboutUs from './components/pages/AboutUs';
+import RequestList from './components/Librarian/RequestList';
 
 
 
@@ -38,6 +44,8 @@ function App() {
       }
     }
   }, [dispatch]);
+
+
   
   // console.log(user);
   return (
@@ -54,15 +62,20 @@ function App() {
             <>
              <Route path="/" element={<><Header/><Homepage/><Footer /></>} />
              <Route path="api/books/:id" element={<><Navbar/><Bookinfo /><Footer /></>} />
-             {/* <Route path="librarian" element={<LibrarianDashboard/>} /> */}
+             <Route path="/about-us" element={<><Navbar/><AboutUs/><Footer/></>}/>
+             {/* Librarian Aceesable routes only*/}
              <Route path="librarian" element={<LibrarianDashboard />}>
-               <Route index element={<BooksList />} />
-               
+               <Route index element={<LibrarianHomepage/>} />
+               <Route path="finance" element={<Finance />} />
+               <Route path="add-books" element={<AddBooks />} />
+               <Route path="requests" element={<RequestList/>}/>
             </Route>
+             <Route path="/feedback" element={<><Navbar/><FeedbackForm/><Footer /></>} />
+             {/* Admin Acessable routes only */}
               {user.role === 'admin' && (
                 <Route path="/admin" element={<><Navbar /><AdminDashboard /><Footer /></>} />
               )}
-              <Route path="*" element={<><Header /><NotFound /><Footer /></>} />
+              <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />
             </>
           )}
         </Routes>

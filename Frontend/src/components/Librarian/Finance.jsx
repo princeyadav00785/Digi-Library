@@ -2,10 +2,10 @@ import { ArrowLeft } from 'lucide-react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export default function NotFound() {
+export default function Finance() {
   const navigate =useNavigate();
   const handleGoBack = () => {
-    navigate('/');
+    navigate('/librarian');
   };
   
   const handleContactUs = () => {
@@ -13,14 +13,13 @@ export default function NotFound() {
   };
 
   return (
-    <div className="py-10 mt-44">
+    <div className="py-10">
       <div className="text-center">
-        <p className="text-base font-semibold text-black">404</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-black sm:text-5xl">
-          Page not found
-        </h1>
+        <h2 className="mt-20 text-2xl font-bold tracking-tight text-black sm:text-5xl ">
+        Finance Feature Coming Soon...
+        </h2>
         <p className="mt-4 text-base leading-7 text-gray-600">
-          Sorry, we couldn&apos;t find the page you&apos;re looking for.
+            Wait for it , Finance Feature coming soon..
         </p>
         <div className="mt-4 flex items-center justify-center gap-x-3">
           <button
@@ -29,7 +28,7 @@ export default function NotFound() {
             className="inline-flex items-center rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
             <ArrowLeft size={16} className="mr-2" />
-            Go back
+            Return to dashboard
           </button>
           <button
             type="button"

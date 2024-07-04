@@ -7,6 +7,7 @@ const connectDB= require('./DB/db');
 
 const userRoutes =require('./Routes/userRoutes');
 const bookRoutes =require('./Routes/bookRoutes');
+const bookRequestRoutes =require('./Routes/bookRequests');
 const adminRoutes=require('./Routes/adminRoutes');
 const feedbackRoutes=require('./Routes/feedbackRoutes')
 const cors = require('cors');
@@ -19,7 +20,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth',userRoutes);
 app.use('/api/books',bookRoutes);
-app.use('/api/book-requests', bookRoutes);
+app.use('/api/book-requests', bookRequestRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/feedback',feedbackRoutes);
 

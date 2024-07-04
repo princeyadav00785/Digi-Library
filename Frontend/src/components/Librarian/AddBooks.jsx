@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const BookForm = () => {
+const AddBooks = () => {
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -32,6 +32,7 @@ const BookForm = () => {
           Authorization: `Bearer ${token}`,
         }}); 
       console.log(response.data);
+      alert(`!${formData.title} Book sucessfully added...`)
       setFormData({
         title: '',
         author: '',
@@ -48,7 +49,8 @@ const BookForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-4 shadow-md rounded">
+    <form onSubmit={handleSubmit} className="bg-white p-5 shadow-md rounded">
+              <div className=" text-3xl flex items-end justify-center font-medium text-black mt-3">Add New Book</div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Title</label>
         <input
@@ -145,4 +147,4 @@ const BookForm = () => {
   );
 };
 
-export default BookForm;
+export default AddBooks;

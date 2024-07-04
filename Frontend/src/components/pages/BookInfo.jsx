@@ -62,10 +62,10 @@ export default function Bookinfo() {
     const token = localStorage.getItem('token');
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/books/request', 
+        'http://localhost:5000/api/book-requests/request', 
         { 
           bookId: id, 
-          requestType: 'borrow'  // Include the requestType field
+          requestType: 'borrow'  
         }, 
         {
           headers: {

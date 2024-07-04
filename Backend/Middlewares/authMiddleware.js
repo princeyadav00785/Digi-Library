@@ -10,6 +10,7 @@ const protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.user.id).select('-password');
       // req.user=decoded.user;
+      // console.log("token verified !!");
       next();
     } catch (error) {
       res.status(401).json({ message: 'Not authorized, token failed' });
@@ -39,13 +40,17 @@ const librarian = (req, res, next) => {
 };
 
 
+
 const authorize = (...roles) => {
+  // console.log("Authorization check!!")
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({ message: 'You do not have permission to perform this action' });
     }
+    // console.log("User Authorised !!")
     next();
   };
 };
+
 
 module.exports = { protect, admin, librarian ,authorize };

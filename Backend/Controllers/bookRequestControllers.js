@@ -41,7 +41,7 @@ exports.createBookRequest = async (req, res) => {
 // Respond to a request (PATCH /api/admin/requests/:requestId)
 exports.respondToRequest = async (req, res) => {
   const { status } = req.body;
-
+   console.log(status);
   try {
     const request = await BookRequest.findById(req.params.requestId);
     if (!request) {
@@ -125,9 +125,14 @@ exports.respondToRequest = async (req, res) => {
 // Get all requests (GET /api/admin/requests) and librarian too.
 exports.getAllRequests = async (req, res) => {
   try {
-    const requests = await BookRequest.find().populate('user book');
+    // console.log('I am here ..')
+    const requests = await BookRequest.find()
+    .populate('user', 'username email')
+    .populate('book', 'title author');
     res.json(requests);
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+

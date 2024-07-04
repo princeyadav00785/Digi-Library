@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from './SideBar';
 import Footer from '../pages/Footer';
 import { Link } from 'react-router-dom'
-import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
+import { Menu, X, } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom';
+import { Home, LayoutDashboard, DollarSign, BookOpen, Users, Edit, Settings, Mail, History, User } from 'lucide-react';
 
 
 const LibrarianDashboard = () => {
@@ -12,44 +13,55 @@ const LibrarianDashboard = () => {
     {
       name: 'Home',
       href: '/',
+      icon: <Home />,
     },
     {
       name: 'Dashboard',
-      href: '/librarian/dashboard',
+      href: '/librarian',
+      icon: <LayoutDashboard />,
     },
     {
       name: 'Finance',
       href: '/librarian/finance',
+      icon: <DollarSign />,
     },
     {
-      name:'Admin-Dashboard',
-      href:'/admin'
+      name: 'Admin-Dashboard',
+      href: '/admin',
+      icon: <LayoutDashboard />,
     },
     {
-      name:"Add Books",
-      href:'/librarian/add-books'
+      name: 'Add Books',
+      href: '/librarian/add-books',
+      icon: <BookOpen />,
     },
     {
-      name:"Requests",
-      href:'/librarian/requests'
+      name: 'Requests',
+      href: '/librarian/requests',
+      icon: <Mail />,
     },
     {
-      name:"Book History",
-      href:'/librarian/book-history'
+      name: 'Book History',
+      href: '/librarian/book-history',
+      icon: <History />,
     },
     {
-      name:"Users History",
-      href:'/librarian/users-history'
+      name: 'Users History',
+      href: '/librarian/users-history',
+      icon: <Users />,
     },
     {
-      name:"Edit Books",
-      href:'/librarian/edit-books'
+      name: 'Edit Books',
+      href: '/librarian/edit-books',
+      icon: <Edit />,
     },
     {
-      name:"Profile Setting",
-      href:'/librarian/profile'
+      name: 'Profile Setting',
+      href: '/librarian/profile',
+      icon: <Settings />,
     },
-  ]
+  ];
+  
 
   const user =useSelector((state)=>state.user.user);
   const role=user.role;
@@ -65,7 +77,7 @@ const LibrarianDashboard = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
-        setNavbarBg('bg-white'); 
+        setNavbarBg('bg-black'); 
       } else {
         setNavbarBg('bg-transparent'); 
       }
@@ -187,6 +199,7 @@ const LibrarianDashboard = () => {
                         href={item.href}
                         className="-m-3 flex items-center rounded-md p-3 text-lg font-semibold hover:bg-teal-500"
                       >
+                        {item.icon}
                         <span className="ml-3 text-base font-medium text-gray-900">
                           {item.name}
                         </span>

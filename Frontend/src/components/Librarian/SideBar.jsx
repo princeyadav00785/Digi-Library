@@ -30,7 +30,7 @@ export default function Sidebar() {
             <label className="px-3 text-xs font-semibold uppercase text-white">analytics</label>
             <a
               className="flex transform items-center rounded-lg px-3 py-2 text-gray-200 transition-colors duration-300 hover:bg-gray-50 hover:text-gray-700"
-              href="/librarian/dashboard"
+              href="/librarian"
             >
               <BarChart className="h-5 w-5" aria-hidden="true" />
               <span className="mx-2 text-sm font-medium">Dashboard</span>

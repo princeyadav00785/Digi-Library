@@ -12,6 +12,7 @@ exports.getAllFeedback = async (req, res) => {
 };
 
 exports.createFeedback = async (req, res) => {
+  // console.log('I am here 1.')
   const { subject, message } = req.body;
   const userId = req.user._id; // Assuming user ID is stored in req.user from middleware
 
@@ -25,6 +26,7 @@ exports.createFeedback = async (req, res) => {
     const savedFeedback = await newFeedback.save();
     res.status(201).json(savedFeedback);
   } catch (error) {
+    // console.log('I am here.')
     res.status(500).json({ message: error.message });
   }
 };
