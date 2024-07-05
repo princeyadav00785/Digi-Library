@@ -15,7 +15,7 @@ const router = express.Router();
   router.patch('/return/:id', protect, authorize('librarian'), BookRequestContoller.respondToRequest);
   
   // Listing Requests
-  router.get('/',protect,authorize('librarian'),BookRequestContoller.getAllRequests);
+  router.get('/',protect,authorize('librarian,','admin'),BookRequestContoller.getAllRequests);
   
 
   module.exports = router;

@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 
 
-function BookHistory() {
+function AdminBookHistory() {
   const { id } = useParams();
   const [history, setHistory] = useState([]);
   const Navigate =useNavigate();
   const handleClick=()=>{
-    Navigate('/librarian/book-history')
+    Navigate('/admin/book-history')
   }
 
   useEffect(() => {
@@ -57,4 +57,4 @@ function BookHistory() {
   );
 }
 
-export default BookHistory;
+export default AdminBookHistory;

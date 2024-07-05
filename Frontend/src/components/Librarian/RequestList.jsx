@@ -5,6 +5,8 @@ import RequestItem from './RequestItem';
 const RequestList = () => {
   const [requests, setRequests] = useState([]);
 
+  // console.log(role);
+
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -28,7 +30,7 @@ const RequestList = () => {
       <h1 className="text-2xl font-semibold mb-4">Book Requests</h1>
       <div className="grid grid-cols-1 gap-4">
         {requests.map(request => (
-          <RequestItem key={request._id} request={request} />
+          <RequestItem key={request._id} request={request}  />
         ))}
       </div>
     </div>

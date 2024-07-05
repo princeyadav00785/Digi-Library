@@ -93,7 +93,7 @@ exports.deleteBook = async (req, res) => {
       return res.status(404).json({ message: 'Book not found' });
     }
 
-    await Comment.deleteOne({ _id: req.params.id});
+    await book.deleteOne({ _id: req.params.id});
     // await book.remove();
 
     res.json({ message: 'Book removed' });

@@ -5,18 +5,15 @@ import Header from './components/pages/Header';
 import NotFound from './components/pages/NotFound';
 import SignIn from './components/auth/Login'
 import Register from './components/auth/Register'
-import Dashboard from './components/components/Hero';
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser,clearUser } from './redux/userslice';
 import {jwtDecode} from 'jwt-decode';
-import Hero from './components/components/Hero';
 import Navbar from './components/pages/Navbar';
 import Homepage from './components/pages/Homepage';
 import Bookinfo from './components/pages/BookInfo';
 import LibrarianDashboard from './components/Librarian/LibrarianDashBoard';
-import BooksList from './components/components/BookList';
 import LibrarianHomepage from './components/Librarian/Homepage';
 import Finance from './components/Librarian/Finance';
 import FeedbackForm from './components/pages/Feedback';
@@ -28,6 +25,16 @@ import BookHistory from './components/pages/BookHistory';
 import UsersHisList from './components/pages/UserHisList';
 import UserHistory from './components/pages/UserHistory';
 import UserProfile from './components/pages/Profile';
+import BookList from './components/Librarian/BookList';
+import EditBook from './components/Librarian/EditBooks';
+import AdminHomepage from './components/dashboard/Homepage';
+import AdminFinance from './components/dashboard/Finance';
+import AdminBookHisList from './components/dashboard/BookHisList';
+import AdminBookHistory from './components/dashboard/BookHistory';
+import AdminUsersHisList from './components/dashboard/UserHisList';
+import AdminUserHistory from './components/dashboard/UsersHistory';
+import AdminBookList from './components/dashboard/BookList';
+import AdminEditBook from './components/dashboard/EditBook';
 
 
 
@@ -75,6 +82,7 @@ function App() {
              <Route path ="/profile" element={<><Navbar/><UserProfile/><Footer/></>}/>
 
              {/* Librarian Aceesable routes only*/}
+             {user.role === 'librarian' && (
              <Route path="librarian" element={<LibrarianDashboard />}>
                <Route index element={<LibrarianHomepage/>} />
                <Route path="finance" element={<Finance />} />
@@ -84,11 +92,25 @@ function App() {
                <Route path ="books/history/:id" element={<BookHistory/>}/>
                <Route path ="users-history" element={<UsersHisList/>}/>
                <Route path ="users-history/:id" element={<UserHistory/>}/>
+               <Route path ="edit-books" element={<BookList/>}/>
+               <Route path ="edit-books/:bookId" element={<EditBook/>}/>
             </Route>
+             )}
 
              {/* Admin Acessable routes only */}
               {user.role === 'admin' && (
-                <Route path="/admin" element={<><Navbar /><AdminDashboard /><Footer /></>} />
+                <Route path="/admin" element={<><AdminDashboard /></>} >
+               <Route index element={<AdminHomepage/>} />
+               <Route path="finance" element={<AdminFinance />} />
+               <Route path="add-books" element={<AddBooks />} />
+               <Route path="requests" element={<RequestList/>}/>
+               <Route path ="book-history" element={<AdminBookHisList/>}/>
+               <Route path ="books/history/:id" element={<AdminBookHistory/>}/>
+               <Route path ="users-history" element={<AdminUsersHisList/>}/>
+               <Route path ="users-history/:id" element={<AdminUserHistory/>}/>
+               <Route path ="edit-books" element={<AdminBookList/>}/>
+               <Route path ="edit-books/:bookId" element={<AdminEditBook/>}/>
+                </Route>
               )}
               <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />
 

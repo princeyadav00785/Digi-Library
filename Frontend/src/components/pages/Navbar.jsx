@@ -96,8 +96,9 @@ export default function Navbar() {
                       if (item.name === 'Admin-Dashboard' && role !== 'admin') {
                         return null;
                       }
-
-                      if (item.name === 'Librarian' && role === 'student') {
+                      if(item.name==='History'&&role!=='student')
+                        return null;
+                      if (item.name === 'Librarian' && role !== 'librarian') {
                         return null;
                       }
                       if (item.name === 'Logout') {
@@ -179,8 +180,9 @@ export default function Navbar() {
                       if (item.name === 'Admin-Dashboard' && role !== 'admin') {
                         return null;
                       }
-
-                      if (item.name === 'Librarian' && role === 'student') {
+                      if(item.name==='History'&&role!=='student')
+                        return null;
+                      if (item.name === 'Librarian' && role !== 'librarian') {
                         return null;
                       }
                       if (item.name === 'Logout') {
@@ -222,10 +224,10 @@ export default function Navbar() {
                     src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
                     alt={user.username}
                   />
-                  <span className="flex flex-col">
+                  <Link to ='/profile' className="flex flex-col">
                     <span className="text-sm font-medium text-gray-900">{user.username}</span>
                     <span className="text-sm font-medium text-gray-500">{user.email}</span>
-                  </span>
+                  </Link>
                 </div>
               </div>
             </div>

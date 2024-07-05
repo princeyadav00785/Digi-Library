@@ -139,7 +139,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.getUserHistory = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId)
+  // console.log(userId)
 
   try {
     // Fetch user with books they borrowed
