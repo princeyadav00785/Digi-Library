@@ -69,6 +69,7 @@ export default function Navbar() {
     localStorage.removeItem('token'); 
     window.location.href = '/login'; 
   };
+  
 
   return (
     <div className={`text-lg fixed top-0 left-0 w-full ${navbarBg} transition-colors duration-500`}>
@@ -122,11 +123,13 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="flex grow justify-end">
+            <Link to="/search-books" className="flex h-10 w-[200px] rounded-md bg-gray-100 px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
           <input
-            className="flex h-10 w-[200px] rounded-md bg-gray-100 px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             type="text"
             placeholder="Search"
-          ></input>
+            className="w-full h-full bg-transparent border-none outline-none cursor-pointer"
+          />
+        </Link>
         </div>
         <div className="ml-2 mt-2 hidden lg:block">
           <span className="relative inline-block">

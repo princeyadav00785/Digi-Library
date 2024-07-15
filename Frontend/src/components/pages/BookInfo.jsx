@@ -12,27 +12,8 @@ export default function Bookinfo() {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [message,setMessage]=useState('');
-  useEffect(() => {
-    const fetchBooks = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const response = await axios.get('http://localhost:5000/api/books', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-        setBooks(response.data);
-        setLoading(false);
-        // console.log(response.data);
-      } catch (error) {
-        console.error('Error fetching books:', error.data);
-        setLoading(false);
-      }
-    };
+  const [cat,setCat]=useState('');
 
-    fetchBooks();
-  }, []);
-  
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -47,8 +28,8 @@ export default function Bookinfo() {
           }
         );
         setBook(response.data);
+        setCat(response.data.category);
         setLoading(false);
-        // console.log(response.data); 
       } catch (error) {
         console.error('Error fetching book:', error);
         setLoading(false);
@@ -57,6 +38,28 @@ export default function Bookinfo() {
 
     fetchBook();
   }, [id]);
+
+  useEffect(() => {
+    if (cat) {
+      const fetchBooks = async () => {
+        const token = localStorage.getItem('token');
+        try {
+          const response = await axios.get('http://localhost:5000/api/books', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const filteredBooks = response.data.books.filter(book => book.category === cat);
+          setBooks(filteredBooks);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching books:', error);
+          setLoading(false);
+        }
+      };
+      fetchBooks();
+    }
+  }, [cat]);
 
   const handleBorrowRequest = async () => {
     const token = localStorage.getItem('token');
@@ -101,7 +104,7 @@ export default function Bookinfo() {
                     <img
                       alt={`Product gallery 1`}
                       // src={book.imageSrc}
-                              src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+                              src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60"
                       width={650}
                       height={590}
                       className="rounded-lg object-cover md:h-[300px] md:w-full lg:h-full"
@@ -110,22 +113,6 @@ export default function Bookinfo() {
                   <div className="absolute top-2/4 z-10 flex w-full items-center justify-between">
                   </div>
                 </div>
-                {/* <div className="flex gap-2 xl:flex-col">
-                  {book.images.map((image, index) => (
-                    <div
-                      key={index}
-                      className="border-border-base flex cursor-pointer items-center justify-center overflow-hidden rounded border transition hover:opacity-75 "
-                    >
-                      <img
-                        alt={`Product ${index}`}
-                        src={image}
-                        decoding="async"
-                        loading="lazy"
-                        className="h-20 w-20 object-cover md:h-24 md:w-24 lg:h-28 lg:w-28 xl:w-32"
-                      />
-                    </div>
-                  ))}
-                </div> */}
               </div>
             </div>
             <div className="flex shrink-0 flex-col lg:w-[430px] xl:w-[470px] 2xl:w-[480px]">
@@ -140,14 +127,7 @@ export default function Bookinfo() {
                 </h4>
                 <ul className="flex flex-wrap space-x-2">
                 <p className="mt-4 font-semibold">#{book.category}</p>
-                  {/* {book.availableSizes.map((size, index) => (
-                    <li
-                      key={index}
-                      className="md:text-15px mb-2 flex h-9 cursor-pointer items-center justify-center rounded border p-1 px-3 text-sm font-medium transition duration-200 ease-in-out md:mb-3 md:h-10"
-                    >
-                      {size}
-                    </li>
-                  ))} */}
+
                 </ul>
               </div>
               <div className="pb-2" />
@@ -194,7 +174,7 @@ export default function Bookinfo() {
         </div>
       </div>
       <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-semibold mb-4">Similar Books (Would add filter here later for filtering similar category books.)</h2>
+      <h2 className="text-3xl font-semibold mb-4">Similar Books :</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {books.map((book) => (
             <BookCard key={book._id} book={book} />

@@ -3,12 +3,14 @@ import axios from 'axios';
 import { ArrowRight } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/userslice';
+import { useNavigate } from 'react-router-dom';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
+  const navigate= useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ export function SignIn() {
       localStorage.setItem('token', res.data.token);
       dispatch(setUser({ user,token}));
       setMessage('Login successful');
+      navigate('/');
       // Redirect to dashboard or another page
     } catch (error) {
       setMessage(error.response.data.mes|| 'Error occurred');

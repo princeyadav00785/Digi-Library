@@ -35,6 +35,8 @@ import AdminUsersHisList from './components/dashboard/UserHisList';
 import AdminUserHistory from './components/dashboard/UsersHistory';
 import AdminBookList from './components/dashboard/BookList';
 import AdminEditBook from './components/dashboard/EditBook';
+import AdminUsers from './components/dashboard/AdminUser';
+import SearchBooksPage from './components/pages/SearchBooksPage';
 
 
 
@@ -74,12 +76,13 @@ function App() {
             </>
           ) : (
             <>
-
+            
              <Route path="/" element={<><Header/><Homepage/><Footer /></>} />
              <Route path="api/books/:id" element={<><Navbar/><Bookinfo /><Footer /></>} />
              <Route path="/about-us" element={<><Navbar/><AboutUs/><Footer/></>}/>
              <Route path="/feedback" element={<><Navbar/><FeedbackForm/><Footer /></>} />
              <Route path ="/profile" element={<><Navbar/><UserProfile/><Footer/></>}/>
+             <Route path="/search-books" element={<><Navbar/><SearchBooksPage/><Footer/></>}/>
 
              {/* Librarian Aceesable routes only*/}
              {user.role === 'librarian' && (
@@ -110,6 +113,7 @@ function App() {
                <Route path ="users-history/:id" element={<AdminUserHistory/>}/>
                <Route path ="edit-books" element={<AdminBookList/>}/>
                <Route path ="edit-books/:bookId" element={<AdminEditBook/>}/>
+               <Route path ="profile-setting" element={<AdminUsers/>}/>
                 </Route>
               )}
               <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />

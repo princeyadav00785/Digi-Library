@@ -5,12 +5,14 @@ const {
   getBook,
   updateBook,
   deleteBook,
-  getBookHistory
+  getBookHistory,
+  getLatestBooks
 } = require('../Controllers/bookControllers');
 const { protect, librarian,authorize } = require('../Middlewares/authMiddleware');
 
 
 const router = express.Router();
+
 
 // Crud operations  on books by librarian and fetching books data by students.
 router.route('/')
@@ -22,6 +24,8 @@ router.route('/:id')
   .get(protect, getBook)
   .put(protect, librarian, updateBook)
   .delete(protect, librarian, deleteBook);
+
+
 
 router.get('/history/:bookId', protect, authorize('admin', 'librarian'), getBookHistory);
 

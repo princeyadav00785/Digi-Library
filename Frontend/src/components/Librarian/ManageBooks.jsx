@@ -15,7 +15,7 @@ const ManageBooks = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           }}); 
-        setBooks(response.data);
+        setBooks(response.data.books);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching books:', error);

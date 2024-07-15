@@ -28,9 +28,43 @@ exports.addBook = async (req, res) => {
 };
 
 exports.getBooks = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;  // Current page number, default to 1
+  const limit = parseInt(req.query.limit) || 10; // Number of books per page, default to 10
+
   try {
-    const books = await Book.find();
-    // console.log("i am here.")
+    // Count total number of books
+    const totalBooks = await Book.countDocuments();
+
+    // Calculate total number of pages
+    const totalPages = Math.ceil(totalBooks / limit);
+
+    // Adjust page number to cyclic behavior
+    let adjustedPage = page;
+    if (adjustedPage < 1) {
+      adjustedPage = totalPages;
+    } else if (adjustedPage > totalPages) {
+      adjustedPage = 1;
+    }
+
+    // Calculate how many documents to skip based on adjusted page number
+    const skip = (adjustedPage - 1) * limit;
+
+    // Fetch books for the current page
+    const books = await Book.find().skip(skip).limit(limit);
+
+    res.json({
+      books,
+      currentPage: adjustedPage,
+      totalPages,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getLatestBooks = async (req, res) => {
+  try {
+    const books = await Book.find().sort({ createdAt: -1 }).limit(20);
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });

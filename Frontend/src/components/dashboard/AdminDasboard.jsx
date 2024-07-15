@@ -57,7 +57,7 @@ const Dashboard = () => {
     },
     {
       name: 'Profile Setting',
-      href: '/admin/profile',
+      href: '/admin/profile-setting',
       icon: <Settings />,
     },
   ];

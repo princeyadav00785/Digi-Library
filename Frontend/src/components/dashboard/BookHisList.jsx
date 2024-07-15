@@ -15,8 +15,8 @@ function AdminBookHisList() {
               Authorization: `Bearer ${token}`,
             },
           });
-        setBooks(response.data);
-        // console.log(response);
+          setBooks(response.data.books);
+        // console.log(response.data.books);
       } catch (error) {
         console.error('Error fetching books', error);
       }

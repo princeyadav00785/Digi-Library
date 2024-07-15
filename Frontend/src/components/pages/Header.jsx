@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Hero from '../components/Hero'
-import bgimgae from '../../assets/7.jpg'
+import bgimgae from '../../assets/1.jpg'
 
 function Header() {
   return (

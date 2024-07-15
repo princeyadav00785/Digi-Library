@@ -1,5 +1,4 @@
 import React from 'react';
-import bgimage from '../../assets/7.jpg'
 
 
 function Hero() {
@@ -9,7 +8,7 @@ function Hero() {
       <h1 className="text-[6vh] font-semibold mb-4 max-w-3xl text-center  ">
         Welcome to the Digi-Library
       </h1>
-      <p className="mt-10 text-lg  max-w-2xl text-center text-teal-900 font-extrabold">
+      <p className="mt-10 text-lg  max-w-2xl text-center text-white font-extrabold">
         Explore the library's collection, manage your borrowed books, and more.
       </p>
     </div>
