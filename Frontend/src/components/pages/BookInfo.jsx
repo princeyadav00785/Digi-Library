@@ -11,6 +11,7 @@ export default function Bookinfo() {
   const [books, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [showModal3, setShowModal3] = useState(false);
   const [message,setMessage]=useState('');
   const [cat,setCat]=useState('');
 
@@ -87,6 +88,32 @@ export default function Bookinfo() {
       setShowModal2(true);
     }
   };
+  const handleReturnRequest = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/book-requests/request', 
+        { 
+          bookId: id, 
+          requestType: 'return'  
+        }, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log('Request sent:', response.data);
+      setMessage(response.data.message);
+      setShowModal3(false);
+      setShowModal2(true);
+
+    } catch (error) {
+      console.error('Error sending request:', error);
+      setMessage(error.response.data.message);
+      setShowModal3(true);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>; 
@@ -150,6 +177,7 @@ export default function Bookinfo() {
                   <div className="">
                     <button
                       type="button"
+                      onClick={() => setShowModal3(true)}
                       className="inline-flex w-full items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                     >
                       <Share size={16} className="mr-3" />
@@ -213,6 +241,28 @@ export default function Bookinfo() {
                 onClick={() => setShowModal2(false)}
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+        {showModal3 && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-md">
+            <h2 className="text-xl font-semibold mb-4">Confirmation</h2>
+            <p className="mb-4">Send request to the librarian for returning book !</p>
+            <div className="flex justify-end space-x-4">
+              <button
+                className="px-4 py-2 bg-gray-300 rounded"
+                onClick={() => setShowModal3(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+                onClick={handleReturnRequest}
+              >
+                Send
               </button>
             </div>
           </div>
