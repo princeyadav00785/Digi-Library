@@ -3,6 +3,9 @@ import { ChevronLeft, ChevronRight, Heart, Share } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import BookCard from '../components/BookCard';
+import { useSelector, useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import { setWishList } from '../../redux/WishListSlicer';
 
 export default function Bookinfo() {
   const { id } = useParams(); 
@@ -14,8 +17,12 @@ export default function Bookinfo() {
   const [showModal3, setShowModal3] = useState(false);
   const [message,setMessage]=useState('');
   const [cat,setCat]=useState('');
+  const notify = () => toast("Wow so easy!");
+  const dispatch = useDispatch();
 
-
+  const addToWislist=()=>{
+    dispatch(setWishList(book));
+  }
   useEffect(() => {
     const fetchBook = async () => {
       const token = localStorage.getItem('token');
@@ -172,7 +179,7 @@ export default function Bookinfo() {
                     className="inline-flex items-center justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                   >
                     <Heart size={16} className="mr-3" />
-                    <span className="block">Wishlist</span>
+                    <span  onClick={addToWislist} className="block">Wishlist</span>
                   </button>
                   <div className="">
                     <button

@@ -9,7 +9,8 @@ const wishListSlice = createSlice({
   initialState,
   reducers: {
     setWishList: (state, action) => {
-      state.wishList = action.payload;
+      const oldwishlist=[...state.wishList];
+      state.wishList=[...oldwishlist,action.payload];
     },
     clearWishList: (state) => {
       state.wishList = [];
