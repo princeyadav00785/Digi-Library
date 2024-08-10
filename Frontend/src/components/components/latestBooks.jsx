@@ -29,29 +29,28 @@ function UpcomingBooks() {
   }, [dispatch]);
 
   return (
-    <section className="py-10">
-      <div className="container mx-auto">
+    <section className="py-10 bg-gray-50 mb-20">
+      <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between items-center mb-8">
-          <div className="title-wrapper">
-            <p className="section-subtitle text-gray-600"></p>
-            <h2 className="section-title text-2xl font-bold">Latest Books</h2>
+          <div className="w-full lg:w-auto mb-4 lg:mb-0">
+            <p className="section-subtitle text-gray-600">Check out the latest collection</p>
+            <h2 className="section-title text-3xl font-bold">Latest Books</h2>
           </div>
+          {/* Uncomment and update this section if you want to add filters in the future */}
           {/* <ul className="filter-list flex space-x-4">
             <li><button className="filter-btn px-4 py-2 rounded bg-blue-500 text-white">Science</button></li>
             <li><button className="filter-btn px-4 py-2 rounded bg-gray-200">Geography</button></li>
             <li><button className="filter-btn px-4 py-2 rounded bg-gray-200">History</button></li>
           </ul> */}
         </div>
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {books.map((book) => (
-              <BookCard key={book._id} book={book} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {books.map((book) => (
+            <BookCard key={book._id} book={book} />
+          ))}
         </div>
       </div>
     </section>
   );
-}
+};
 
 export default UpcomingBooks;

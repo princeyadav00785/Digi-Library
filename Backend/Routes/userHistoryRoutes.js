@@ -5,6 +5,6 @@ const { protect,authorize } = require('../Middlewares/authMiddleware');
 
 
 
-router.get('/:id',protect,authorize('admin', 'librarian'),userController.getUserHistory );
+router.get('/:id',protect,userController.getUserHistory );
 
 module.exports= router;

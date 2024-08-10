@@ -6,42 +6,42 @@ import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 import { useSelector } from 'react-redux'
 
 
-const menuItems = [
-  {
-    name: 'Home',
-    href: '/',
-  },
-  {
-    name: 'About',
-    href: '/about-us',
-  },
-  {
-    name: 'Contact',
-    href: '/feedback',
-  },
-  {
-    name:'Admin-Dashboard',
-    href:'/admin'
-  },
-  {
-    name:"Librarian",
-    href:'/librarian'
-  },
-  {
-    name:'History',
-    href:'/user-history'
-  },
-  {
-    name:'Logout',
-    href:'/'
-  }
-]
-
 export default function Navbar() {
   const user =useSelector((state)=>state.user.user);
   const role=user.role;
-  // console.log(user);
-
+  const menuItems = [
+    {
+      name: 'Home',
+      href: '/',
+    },
+    {name:'Profile',
+      href:'/profile'
+    },
+    {
+      name:'Admin-Dashboard',
+      href:'/admin'
+    },
+    {
+      name:"Librarian",
+      href:'/librarian'
+    },
+    {
+      name:'History',
+      href:`/users-history/${user.id}`
+    },
+    {
+      name:'Logout',
+      href:'/'
+    },
+    {
+      name: 'About-Us',
+      href: '/about-us',
+    },
+    {
+      name: 'Contact Us',
+      href: '/feedback',
+    },
+  ]
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   const toggleMenu = () => {
@@ -97,8 +97,8 @@ export default function Navbar() {
                       if (item.name === 'Admin-Dashboard' && role !== 'admin') {
                         return null;
                       }
-                      if(item.name==='History'&&role!=='student')
-                        return null;
+                      // if(item.name==='History'&&role!=='student')
+                      //   return null;
                       if (item.name === 'Librarian' && role !== 'librarian') {
                         return null;
                       }
@@ -134,7 +134,7 @@ export default function Navbar() {
         <div className="ml-2 mt-2 hidden lg:block">
           <span className="relative inline-block">
             <img
-              className="h-10 w-10 rounded-full"
+              className="h-10 w-10 rounded-sm"
               src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
               alt={user.username}
             />

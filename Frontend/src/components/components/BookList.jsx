@@ -51,7 +51,7 @@ const BooksList = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-semibold mb-4">All Books</h2>
+      <h2 className="text-5xl font-semibold mb-4">All Books</h2>
       {loading ? (
         <Loader />
       ) : (

@@ -9,8 +9,10 @@ const wishListSlice = createSlice({
   initialState,
   reducers: {
     setWishList: (state, action) => {
-      const oldwishlist=[...state.wishList];
-      state.wishList=[...oldwishlist,action.payload];
+      const existingItem = state.wishList.find(item => item.id === action.payload.id);
+      if (!existingItem) {
+        state.wishList.push(action.payload); // Push the new item if it doesn't exist
+      }
     },
     clearWishList: (state) => {
       state.wishList = [];

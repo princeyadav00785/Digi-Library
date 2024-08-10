@@ -37,6 +37,7 @@ import AdminBookList from './components/dashboard/BookList';
 import AdminEditBook from './components/dashboard/EditBook';
 import AdminUsers from './components/dashboard/AdminUser';
 import SearchBooksPage from './components/pages/SearchBooksPage';
+import PersonHistory from './components/pages/PersonHistory';
 
 
 
@@ -83,6 +84,7 @@ function App() {
              <Route path="/feedback" element={<><Navbar/><FeedbackForm/><Footer /></>} />
              <Route path ="/profile" element={<><Navbar/><UserProfile/><Footer/></>}/>
              <Route path="/search-books" element={<><Navbar/><SearchBooksPage/><Footer/></>}/>
+             <Route path ="users-history/:id" element={<><Navbar/><PersonHistory/><Footer/></>}/>
 
              {/* Librarian Aceesable routes only*/}
              {user.role === 'librarian' && (

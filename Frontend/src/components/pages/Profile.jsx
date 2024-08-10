@@ -6,7 +6,8 @@ import { UserCircle } from 'lucide-react';
 
 const UserProfile = () => {
   const { user } = useSelector((state) => state.user); 
-
+ console.log(user);
+ console.log(user.email)
   return (
     <div className="container mx-auto px-4 py-8 mt-16 mb-10 relative z-[-10]">
      <div className='flex items-center justify-center'> <h2 className="text-3xl font-semibold mt-4 mb-4 text-gray-700 items-center">Profile Page </h2></div>
@@ -45,7 +46,6 @@ const UserProfile = () => {
                 </ul>
               </div>
               <h2 className="text-xl font-semibold mb-4 text-gray-700 mt-5">Fine: 0
-                {/* {user.fine} would add this feature later... */} 
               </h2>
             </div>
           </div>

@@ -1,5 +1,7 @@
 const Book = require('../Model/bookModel');
 const User = require('../Model/userModel');
+
+
 exports.addBook = async (req, res) => {
   const { title, author, isbn, category, description, yearOfPublication, quantity } = req.body;
 
@@ -64,7 +66,7 @@ exports.getBooks = async (req, res) => {
 
 exports.getLatestBooks = async (req, res) => {
   try {
-    const books = await Book.find().sort({ createdAt: -1 }).limit(20);
+    const books = await Book.find().sort({ createdAt: -1 }).limit(12);
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
